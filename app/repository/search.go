@@ -7,15 +7,15 @@ import (
 	"github.com/olivere/elastic/v7"
 )
 
-type EsHandler struct {
+type esHandler struct {
 	client *elastic.Client
 }
 
-func NewEsHandler(client *elastic.Client) *EsHandler {
-	return &EsHandler{client: client}
+func NewEsHandler(client *elastic.Client) *esHandler {
+	return &esHandler{client: client}
 }
 
-func (e *EsHandler) Search(ctx context.Context, keyword, indexName string) ([]*model.SearchResult, error) {
+func (e *esHandler) Search(ctx context.Context, keyword, indexName string) ([]*model.SearchResult, error) {
 	termQuery := elastic.NewMatchPhraseQuery("title", keyword)
 	res, err := e.client.Search().
 		Index(indexName).
